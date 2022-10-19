@@ -1,46 +1,27 @@
 NAME = libftprintf.a
-
-RM = rm -f
-CC = cc
-# CFLAGS = -Wall -Wextra -Werror
-
-AR		= ar
-ARFLAGS = -rcs
-INCFLAG	= -I .
-
+CFLAGS = -Wall -Wextra -Werror
+SRC_DIR = src
 LIBFT_DIR = libft
-
-MANDO = ft_printf.c ft_flags.c ft_convert.c
-
-BONUS = 
-
-MANDOOBJ	= $(MANDO:.c=.o)
-BONUSOBJ = $(BONUS:.c=.o)
+OBJ_DIR = obj
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
+SRC_LIBFT = $(wildcard $(LIBFT_DIR)/*.c)
 OBJ_LIBFT = $(SRC_LIBFT:$(LIBFT_DIR)/%.c=$(LIBFT_DIR)/%.o)
-
-$(NAME): $(MANDOOBJ) $(OBJ_LIBFT)
-	- @Make -C $(LIBFT_DIR)
+all : $(NAME)
+$(NAME) : $(OBJ) $(OBJ_LIBFT)
+	- @Make -C libft
 	- @cp libft/libft.a $(NAME)
-	- @$(AR) $(ARFLAGS) $(NAME) $(MANDOOBJ)
+	- @ar rc $(NAME) $(OBJ)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	- @$(CC) -c $(CFLAGS) $< -o $@
+fclean: clean
+	- @rm -f $(NAME)
+clean:
+	- @rm -f $(OBJ) $(OBJ_LIBFT)
+re: fclean all
 
 run: re
 	- @$(CC) $(CFLAGS) -o printf main.c $(NAME)
 	- @./printf
 
-bonus: $(BONUSOBJ)
-	@$(AR) $(ARFLAGS) $(NAME) $^
-
-%.o : %.c
-	@$(CC) -c $(CFLAGS) $(INCFLAG) $< -o $@
-
-clean:
-	- @$(RM) $(MANDOOBJ) $(BONUSOBJ)
-
-fclean: clean
-	- @$(RM) ${NAME}
-
-re: fclean all
-
-all: $(NAME) #bonus
-
-.PHONY: all clean fclean re bonus
+.PHONY: $(NAME) all fclean clean run

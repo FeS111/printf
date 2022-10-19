@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 09:46:28 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/19 16:28:35 by fschmid          ###   ########.fr       */
+/*   Created: 2022/10/11 09:17:52 by fschmid           #+#    #+#             */
+/*   Updated: 2022/10/19 16:39:29 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef LIBFTPRINTF_H
+# define LIBFTPRINTF_H
+# include <stdlib.h>
+# include <unistd.h>
+# include "../libft/libft.h"
+# include <stdarg.h>
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
-{
-	char	*str;
-	int		i;
+int		ft_printf(const char *str, ...);
 
-	if (!s || !f)
-		return (NULL);
-	str = (char *) ft_calloc(1, sizeof(char) * ft_strlen((char *) s) + 1);
-	if (!str)
-		return (NULL);
-	i = 0;
-	while ((char) s[i] != 0)
-	{
-		str[i] = f(i, (char) s[i]);
-		i++;
-	}
-	return (str);
-}
+int		ft_count_flags(const char *str);
+
+int		ft_is_flag(char c);
+
+char	*ft_get_flags(const char *str);
+
+char	**ft_parse_flags(const char *str, va_list args);
+
+char	*ft_itoa_base(long long n, char *base);
+#endif

@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:40 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/19 16:12:04 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/19 16:30:48 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,38 @@ char	*ft_get_flags(const char *str)
 	return (flags);
 }
 
+char	*ft_parse_flag(char flag, va_list args)
+{
+	char	c;
+	char	*s;
+
+	if (flag == 's')
+		return (va_arg(args, char *));
+	if (flag == 'd' || flag == 'i' || flag == 'u')
+		return (ft_itoa(va_arg(args, int)));
+	if (flag == 'c')
+	{
+		c = va_arg(args, int);
+		return (ft_strjoin(&c, "\0"));
+	}
+	if (flag == '%')
+		return ("%\0");
+	if (flag == 'x')
+		return (ft_itoa_base(va_arg(args, long), "0123456789abcdef"));
+	if (flag == 'X')
+		return (ft_itoa_base(va_arg(args, long), "0123456789ABCDEF"));
+	if (flag == 'p')
+	{
+		s = ft_itoa_base(va_arg(args, long), "0123456789abcdef");
+		return (ft_strjoin("0x", s));
+	}
+	return (NULL);
+}
+
 char	**ft_parse_flags(const char *flags, va_list args)
 {
 	char	**res;
 	int		i;
-	char	c;
-	char	*s;
 
 	if (!flags)
 		return (NULL);
@@ -72,26 +98,7 @@ char	**ft_parse_flags(const char *flags, va_list args)
 	res = ft_calloc(ft_strlen(flags) + 1, sizeof(char *));
 	while (flags[i] != '\0')
 	{
-		if (flags[i] == 's')
-			res[i] = va_arg(args, char *);
-		if (flags[i] == 'd'|| flags[i] == 'i' || flags[i] == 'u')
-			res[i] = ft_itoa(va_arg(args, int));
-		if (flags[i] == 'c')
-		{
-			c = va_arg(args, int);
-			res[i] = ft_strjoin(&c, "\0");
-		}
-		if (flags[i] == '%')
-			res[i] = "%\0";
-		if (flags[i] == 'x')
-			res[i] = ft_itoa_base(va_arg(args, long), "0123456789abcdef");
-		if (flags[i] == 'X')
-			res[i] = ft_itoa_base(va_arg(args, long), "0123456789ABCDEF");
-		if (flags[i] == 'p')
-		{
-			s = ft_itoa_base(va_arg(args, long), "0123456789abcdef");
-			res[i] = ft_strjoin("0x", s);
-		}
+		res[i] = ft_parse_flag(flags[i], args);
 		i++;
 	}
 	return (res);

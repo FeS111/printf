@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:17:52 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/20 11:38:06 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:27:48 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PRINTF_H
 # include <stdlib.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+# include "libft/libft.h"
 # include <stdarg.h>
 
 int		ft_printf(const char *str, ...);
@@ -30,4 +30,8 @@ char	**ft_parse_flags(const char *flags, va_list args);
 char	*ft_itoa_base(long long n, char *base);
 
 char	*ft_convert_to_string(char c);
+
+char	*ft_strprefix(char *prefix, char *str);
+
+char	*ft_ptoa(long n);
 #endif

@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:40 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/20 14:20:17 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:26:05 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_is_flag(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd')
 		return (1);
-	if (c == 'u' || c == 'x' || c == 'X' || c == '%')
+	if (c == 'u' || c == 'x' || c == 'X' || c == '%' || c == 'i')
 		return (1);
 	return (0);
 }
@@ -69,9 +69,16 @@ char	*ft_parse_flag(char flag, va_list args)
 	char	*s;
 
 	if (flag == 's')
-		return (va_arg(args, char *));
-	if (flag == 'd' || flag == 'i' || flag == 'u')
+	{
+		s = va_arg(args, char *);
+		if (!s)
+			s = "(null)";
+		return (ft_strdup(s));
+	}
+	if (flag == 'd' || flag == 'i')
 		return (ft_itoa(va_arg(args, int)));
+	if (flag == 'u')
+		return (ft_ltoa(va_arg(args, long)));
 	if (flag == 'c')
 		return (ft_convert_to_string(va_arg(args, int)));
 	if (flag == '%')
@@ -81,10 +88,7 @@ char	*ft_parse_flag(char flag, va_list args)
 	if (flag == 'X')
 		return (ft_itoa_base(va_arg(args, long), "0123456789ABCDEF"));
 	if (flag == 'p')
-	{
-		s = ft_itoa_base(va_arg(args, long), "0123456789abcdef");
-		return (ft_strjoin("0x", s));
-	}
+		return (ft_ptoa(va_arg(args, long)));
 	return (NULL);
 }
 
@@ -108,7 +112,6 @@ char	**ft_parse_flags(const char *flags, va_list args)
 		{
 			while (k++ < i)
 				free(res[k]);
-			free(res);
 			return (NULL);
 		}
 		i++;

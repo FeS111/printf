@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:49:57 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/20 14:31:47 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/20 15:05:53 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ void	ft_print(char *str, int *count, int is_flag)
 {
 	if (!str)
 		return ;
-	if (is_flag == 1 && str[0] == '\0')
-	{
-		*count += 1;
-		ft_putchar_fd('\0', 1);
-	}
 	*count += ft_strlen(str);
-	ft_putstr_fd(str, 1);
+	if (is_flag == 1 && str[0] == '\\' && str[1] == '\0')
+		ft_putchar_fd('\0', 1);
+	else
+		ft_putstr_fd(str, 1);
 	free(str);
 }
 
@@ -65,7 +63,7 @@ int	ft_printf(const char *format, ...)
 	if (!unparsed_flags)
 	{
 		ft_putstr_fd((char *) format, 1);
-		res = ft_strlen(format);
+		return (ft_strlen(format));
 	}
 	else
 	{

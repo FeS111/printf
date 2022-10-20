@@ -6,11 +6,11 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:40 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/19 16:30:48 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:20:17 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 #include <stdio.h>
 
 int	ft_is_flag(char c)
@@ -56,12 +56,16 @@ char	*ft_get_flags(const char *str)
 		}
 		i++;
 	}
+	if (k == 0)
+	{
+		free(flags);
+		return (NULL);
+	}
 	return (flags);
 }
 
 char	*ft_parse_flag(char flag, va_list args)
 {
-	char	c;
 	char	*s;
 
 	if (flag == 's')
@@ -69,12 +73,9 @@ char	*ft_parse_flag(char flag, va_list args)
 	if (flag == 'd' || flag == 'i' || flag == 'u')
 		return (ft_itoa(va_arg(args, int)));
 	if (flag == 'c')
-	{
-		c = va_arg(args, int);
-		return (ft_strjoin(&c, "\0"));
-	}
+		return (ft_convert_to_string(va_arg(args, int)));
 	if (flag == '%')
-		return ("%\0");
+		return (ft_convert_to_string('%'));
 	if (flag == 'x')
 		return (ft_itoa_base(va_arg(args, long), "0123456789abcdef"));
 	if (flag == 'X')
@@ -91,14 +92,25 @@ char	**ft_parse_flags(const char *flags, va_list args)
 {
 	char	**res;
 	int		i;
+	int		k;
 
 	if (!flags)
 		return (NULL);
 	i = 0;
+	k = -1;
 	res = ft_calloc(ft_strlen(flags) + 1, sizeof(char *));
+	if (!res)
+		return (NULL);
 	while (flags[i] != '\0')
 	{
 		res[i] = ft_parse_flag(flags[i], args);
+		if (!res[i])
+		{
+			while (k++ < i)
+				free(res[k]);
+			free(res);
+			return (NULL);
+		}
 		i++;
 	}
 	return (res);

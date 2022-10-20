@@ -6,11 +6,12 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:05:12 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/19 15:36:43 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:26:51 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
+#include <stdio.h>
 
 size_t	ft_count_digit(long long n, int base)
 {
@@ -26,6 +27,15 @@ size_t	ft_count_digit(long long n, int base)
 		n /= base;
 	}
 	return (ans);
+}
+
+char	*ft_convert_to_string(char c)
+{
+	char	*s;
+
+	s = ft_calloc(2, sizeof(char));
+	s[0] = c;
+	return (s);
 }
 
 char	*ft_itoa_base(long long n, char *base)

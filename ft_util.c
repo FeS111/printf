@@ -6,14 +6,14 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:05:12 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/20 15:41:52 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/21 10:50:23 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-size_t	ft_count_digit(long long n, int base)
+size_t	ft_count_digit(unsigned long n, int base)
 {
 	size_t	ans;
 
@@ -42,10 +42,7 @@ char	*ft_ptoa(long n)
 {
 	char	*res;
 
-	if (n < 0)
-		res = ft_strdup("ffffffffffffffff");
-	else
-		res = ft_itoa_base(n, "0123456789abcdef");
+	res = ft_itoa_base(n, "0123456789abcdef");
 	return (ft_strprefix("0x", res));
 }
 
@@ -64,7 +61,7 @@ char	*ft_convert_to_string(char c)
 	return (s);
 }
 
-char	*ft_itoa_base(long long n, char *base)
+char	*ft_itoa_base(unsigned long n, char *base)
 {
 	size_t		len;
 	char		*itoa;

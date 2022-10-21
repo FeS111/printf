@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:40 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/21 10:08:45 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:19:25 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,17 @@ char	*ft_parse_flag(char flag, va_list args)
 	if (flag == 'd' || flag == 'i')
 		return (ft_itoa(va_arg(args, int)));
 	if (flag == 'u')
-		return (ft_ltoa(va_arg(args, long)));
+		return (ft_ltoa(va_arg(args, unsigned int)));
 	if (flag == 'c')
 		return (ft_convert_to_string(va_arg(args, int)));
 	if (flag == '%')
 		return (ft_convert_to_string('%'));
 	if (flag == 'x')
-		return (ft_itoa_base(va_arg(args, long), "0123456789abcdef"));
+		return (ft_itoa_base(va_arg(args, unsigned int), "0123456789abcdef"));
 	if (flag == 'X')
-		return (ft_itoa_base(va_arg(args, long), "0123456789ABCDEF"));
+		return (ft_itoa_base(va_arg(args, unsigned int), "0123456789ABCDEF"));
 	if (flag == 'p')
-		return (ft_ptoa(va_arg(args, long)));
+		return (ft_ptoa((unsigned long) va_arg(args, void *)));
 	return (NULL);
 }
 

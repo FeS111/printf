@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:17:52 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/20 16:27:48 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/21 10:50:38 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_get_flags(const char *str);
 
 char	**ft_parse_flags(const char *flags, va_list args);
 
-char	*ft_itoa_base(long long n, char *base);
+char	*ft_itoa_base(unsigned long n, char *base);
 
 char	*ft_convert_to_string(char c);
 

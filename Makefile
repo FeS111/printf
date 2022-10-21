@@ -1,27 +1,44 @@
-NAME = libftprintf.a
-CFLAGS = -Wall -Wextra -Werror
-SRC_DIR = src
-LIBFT_DIR = libft
-OBJ_DIR = obj
-SRC = $(wildcard $(SRC_DIR)/*.c)
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
-SRC_LIBFT = $(wildcard $(LIBFT_DIR)/*.c)
-OBJ_LIBFT = $(SRC_LIBFT:$(LIBFT_DIR)/%.c=$(LIBFT_DIR)/%.o)
-all : $(NAME)
-$(NAME) : $(OBJ) $(OBJ_LIBFT)
-	- @Make -C libft
-	- @cp libft/libft.a $(NAME)
-	- @ar rc $(NAME) $(OBJ)
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	- @$(CC) -c $(CFLAGS) $< -o $@
-fclean: clean
-	- @rm -f $(NAME)
+MAKEFLAGS += --no-builtin-rules
+MAKEFLAGS += --no-builtin-variables
+
+VPATH = src subspecifier specifier specifier_helper
+
+# Compiler Variables
+CC		= cc
+# CFLAGSS	= -Wall -Wextra -Werror -g
+INCFLAG	= -I include -I libft
+AR		= ar
+ARFLAGS = -rcs
+# File Variables
+NAME	= libftprintf.a
+SRC		= $(wildcard src/*.c)
+OBJ		= $(addprefix _bin/,$(notdir $(SRC:.c=.o)))
+
+$(NAME): $(OBJ) | libft/libft.a
+	cp libft/libft.a $@
+	$(AR) $(ARFLAGS) $@ $^
+
+libft/libft.a :
+	(cd libft && make && make clean)
+
+_bin :
+	mkdir _bin
+
+_bin/%.o : %.c libft/libft.a | _bin
+	$(CC) -c $(CFLAGSS) $(INCFLAG) $< -o $@
+
 clean:
-	- @rm -f $(OBJ) $(OBJ_LIBFT)
-re: fclean all
+	@rm -f $(OBJ)
+
+fclean:	clean
+	@rm -f $(NAME)
+
+re:		fclean all
+
+all:	$(NAME)
 
 run: re
-	- @$(CC) $(CFLAGS) -o printf main.c $(NAME)
-	- @./printf
+	$(CC) -o printf $(CFLAGSS) $(INCFLAG) $(NAME) main.c
+	./printf
 
-.PHONY: $(NAME) all fclean clean run
+.PHONY: clean fclean re all run

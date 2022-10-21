@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:40 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/20 16:26:05 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/21 10:08:45 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ int	ft_count_flags(const char *str)
 	while (*(str + 1) != '\0')
 	{
 		if (*str == '%' && ft_is_flag(*(str + 1)))
+		{
 			count++;
+			if (*(str + 2) != '\0')
+				str++;
+		}
 		str++;
 	}
 	return (count);
@@ -47,19 +51,16 @@ char	*ft_get_flags(const char *str)
 	i = 0;
 	k = 0;
 	flags = (char *) ft_calloc(ft_count_flags(str) + 1, sizeof(char));
-	while (str[i +1] != '\0')
+	while (str[i + 1] != '\0')
 	{
 		if (str[i] == '%' && ft_is_flag(str[i + 1]))
 		{
 			flags[k] = str[i + 1];
+			if (str[i + 1] == '%' && str[i + 2] != '\0')
+				i++;
 			k++;
 		}
 		i++;
-	}
-	if (k == 0)
-	{
-		free(flags);
-		return (NULL);
 	}
 	return (flags);
 }

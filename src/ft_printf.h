@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:17:52 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/30 14:22:48 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/30 14:46:44 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	ft_print_char(char c);
 int		ft_is_flag(char c);
 
 char	*ft_itoa_base(unsigned long n, int lower);
-
-char	*ft_convert_to_string(char c);
 
 char	*ft_strprefix(char *prefix, char *str);
 

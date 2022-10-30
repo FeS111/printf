@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:05:12 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/30 14:16:40 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/30 14:49:50 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,10 @@ char	*ft_strprefix(char *prefix, char *str)
 
 char	*ft_ptoa(long n)
 {
-	char	*res;
+	char	*d;
 
-	res = ft_itoa_base(n, 1);
-	return (ft_strprefix("0x", res));
-}
-
-char	*ft_convert_to_string(char c)
-{
-	char	*s;
-
-	s = ft_calloc(3, sizeof(char));
-	if (c == '\0')
-	{
-		s[0] = '\\';
-		s[1] = c;
-	}
-	else
-		s[0] = c;
-	return (s);
+	d = ft_itoa_base(n, 1);
+	return (ft_strprefix("0x", d));
 }
 
 char	*ft_itoa_base(unsigned long n, int lower)

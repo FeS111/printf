@@ -18,7 +18,10 @@ $(NAME): $(OBJ) | libft/libft.a
 	cp libft/libft.a $@
 	$(AR) $(ARFLAGS) $@ $^
 
-libft/libft.a :
+libft:
+	@if [ ! -d "./libft" ]; then git clone https://github.com/fes111/libft.git; fi
+
+libft/libft.a: libft
 	(cd libft && make && make clean)
 
 _bin :
@@ -32,6 +35,7 @@ clean:
 
 fclean:	clean
 	@rm -f $(NAME)
+	@rm -rf libft
 
 re:		fclean all
 

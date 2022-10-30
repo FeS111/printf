@@ -1,7 +1,7 @@
 MAKEFLAGS += --no-builtin-rules
 MAKEFLAGS += --no-builtin-variables
 
-VPATH = src subspecifier specifier specifier_helper
+VPATH = src
 
 # Compiler Variables
 CC		= cc

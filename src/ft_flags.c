@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:40 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/21 11:19:25 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/30 14:25:09 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,100 +22,22 @@ int	ft_is_flag(char c)
 	return (0);
 }
 
-int	ft_count_flags(const char *str)
+int	ft_p(char *str, int is_s_flag)
 {
-	int	count;
+	int	res;
 
-	count = 0;
-	while (*(str + 1) != '\0')
-	{
-		if (*str == '%' && ft_is_flag(*(str + 1)))
-		{
-			count++;
-			if (*(str + 2) != '\0')
-				str++;
-		}
-		str++;
-	}
-	return (count);
-}
-
-char	*ft_get_flags(const char *str)
-{
-	char	*flags;
-	int		i;
-	int		k;
-
+	if (is_s_flag == 1 && str)
+		str = ft_strdup(str);
 	if (!str)
-		return (NULL);
-	i = 0;
-	k = 0;
-	flags = (char *) ft_calloc(ft_count_flags(str) + 1, sizeof(char));
-	while (str[i + 1] != '\0')
-	{
-		if (str[i] == '%' && ft_is_flag(str[i + 1]))
-		{
-			flags[k] = str[i + 1];
-			if (str[i + 1] == '%' && str[i + 2] != '\0')
-				i++;
-			k++;
-		}
-		i++;
-	}
-	return (flags);
+		str = ft_strdup("(null)");
+	ft_putstr_fd(str, 1);
+	res = ft_strlen(str);
+	free(str);
+	return ((int) res);
 }
 
-char	*ft_parse_flag(char flag, va_list args)
+int	ft_print_char(char c)
 {
-	char	*s;
-
-	if (flag == 's')
-	{
-		s = va_arg(args, char *);
-		if (!s)
-			s = "(null)";
-		return (ft_strdup(s));
-	}
-	if (flag == 'd' || flag == 'i')
-		return (ft_itoa(va_arg(args, int)));
-	if (flag == 'u')
-		return (ft_ltoa(va_arg(args, unsigned int)));
-	if (flag == 'c')
-		return (ft_convert_to_string(va_arg(args, int)));
-	if (flag == '%')
-		return (ft_convert_to_string('%'));
-	if (flag == 'x')
-		return (ft_itoa_base(va_arg(args, unsigned int), "0123456789abcdef"));
-	if (flag == 'X')
-		return (ft_itoa_base(va_arg(args, unsigned int), "0123456789ABCDEF"));
-	if (flag == 'p')
-		return (ft_ptoa((unsigned long) va_arg(args, void *)));
-	return (NULL);
-}
-
-char	**ft_parse_flags(const char *flags, va_list args)
-{
-	char	**res;
-	int		i;
-	int		k;
-
-	if (!flags)
-		return (NULL);
-	i = 0;
-	k = -1;
-	res = ft_calloc(ft_strlen(flags) + 1, sizeof(char *));
-	if (!res)
-		return (NULL);
-	while (flags[i] != '\0')
-	{
-		res[i] = ft_parse_flag(flags[i], args);
-		if (!res[i])
-		{
-			while (k++ < i)
-				free(res[k]);
-			return (NULL);
-		}
-		i++;
-	}
-	return (res);
+	ft_putchar_fd(c, 1);
+	return (1);
 }

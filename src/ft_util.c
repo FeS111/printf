@@ -6,7 +6,7 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:05:12 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/21 13:13:57 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/30 14:16:40 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_ptoa(long n)
 {
 	char	*res;
 
-	res = ft_itoa_base(n, "0123456789abcdef");
+	res = ft_itoa_base(n, 1);
 	return (ft_strprefix("0x", res));
 }
 
@@ -61,11 +61,16 @@ char	*ft_convert_to_string(char c)
 	return (s);
 }
 
-char	*ft_itoa_base(unsigned long n, char *base)
+char	*ft_itoa_base(unsigned long n, int lower)
 {
 	size_t		len;
 	char		*itoa;
+	char		*base;
 
+	if (lower == 1)
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
 	len = ft_count_digit(n, 16);
 	itoa = ft_calloc(len + 1, sizeof(char));
 	if (!itoa)

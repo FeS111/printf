@@ -6,74 +6,64 @@
 /*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:49:57 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/21 09:55:54 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/30 14:24:17 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-void	ft_print(char *str, int *count, int is_flag)
+int	ft_print(char flag, va_list args)
 {
-	if (!str)
-		return ;
-	*count += ft_strlen(str);
-	if (is_flag == 1 && str[0] == '\\' && str[1] == '\0')
-		ft_putchar_fd('\0', 1);
-	else
-		ft_putstr_fd(str, 1);
-	free(str);
+	if (flag == 's')
+		return (ft_p(va_arg(args, char *), 1));
+	if (flag == 'd' || flag == 'i')
+		return (ft_p(ft_itoa(va_arg(args, int)), 0));
+	if (flag == 'u')
+		return (ft_p(ft_ltoa(va_arg(args, unsigned int)), 0));
+	if (flag == 'c')
+		return (ft_print_char(va_arg(args, int)));
+	if (flag == '%')
+		return (ft_print_char('%'));
+	if (flag == 'x')
+		return (ft_p(ft_itoa_base(va_arg(args, unsigned int), 1), 0));
+	if (flag == 'X')
+		return (ft_p(ft_itoa_base(va_arg(args, unsigned int), 0), 0));
+	if (flag == 'p')
+		return (ft_p(ft_ptoa((unsigned long) va_arg(args, void *)), 0));
+	return (0);
 }
 
-int	ft_vprintf(const char *str, char **flags, int *count)
+int	ft_vprintf(const char *str, va_list	args, int *count)
 {
 	int		i;
-	int		k;
-	int		j;
 
 	i = 0;
-	k = 0;
-	j = 0;
-	while (str[i + 1] != '\0')
+	while (str[i] != '\0')
 	{
-		if (str[i] == '%' && ft_is_flag(str[i + 1]))
+		if (str[i] == '%' && str[i + 1] != '\0' && ft_is_flag(str[i + 1]))
 		{
-			ft_print(ft_substr(str, j, i - j), count, 0);
-			j = i + 2;
+			*count += ft_print(str[i + 1], args);
 			i++;
-			ft_print(flags[k], count, 1);
-			k++;
+		}
+		else
+		{
+			ft_putchar_fd(str[i], 1);
+			*count += 1;
 		}
 		i++;
 	}
-	ft_print(ft_substr(str, j, ft_strlen(str) - j), count, 0);
 	return (0);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	char	**flags;
-	char	*unparsed_flags;
 	int		res;
 
 	res = 0;
 	va_start (args, format);
-	unparsed_flags = ft_get_flags(format);
-	if (!unparsed_flags)
-	{
-		ft_putstr_fd((char *) format, 1);
-		return (ft_strlen(format));
-	}
-	else
-	{
-		flags = ft_parse_flags(unparsed_flags, args);
-		if (!flags)
-			return (0);
-		free(unparsed_flags);
-		ft_vprintf(format, flags, &res);
-		free(flags);
-	}
+	ft_vprintf(format, args, &res);
 	va_end (args);
 	return (res);
 }

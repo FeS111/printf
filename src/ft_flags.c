@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_flags.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fschmid <fschmid@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:40 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/30 14:25:09 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/31 23:46:31 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 int	ft_is_flag(char c)
 {
@@ -22,7 +21,7 @@ int	ft_is_flag(char c)
 	return (0);
 }
 
-int	ft_p(char *str, int is_s_flag)
+int	ft_pstr(char *str, int is_s_flag)
 {
 	int	res;
 

@@ -3,34 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fschmid <fschmid@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:49:57 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/30 14:24:17 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/31 23:46:47 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 int	ft_print(char flag, va_list args)
 {
 	if (flag == 's')
-		return (ft_p(va_arg(args, char *), 1));
+		return (ft_pstr(va_arg(args, char *), 1));
 	if (flag == 'd' || flag == 'i')
-		return (ft_p(ft_itoa(va_arg(args, int)), 0));
+		return (ft_pstr(ft_itoa(va_arg(args, int)), 0));
 	if (flag == 'u')
-		return (ft_p(ft_ltoa(va_arg(args, unsigned int)), 0));
+		return (ft_pstr(ft_ltoa(va_arg(args, unsigned int)), 0));
 	if (flag == 'c')
 		return (ft_print_char(va_arg(args, int)));
 	if (flag == '%')
 		return (ft_print_char('%'));
 	if (flag == 'x')
-		return (ft_p(ft_itoa_base(va_arg(args, unsigned int), 1), 0));
+		return (ft_pstr(ft_itoa_base(va_arg(args, unsigned int), 1), 0));
 	if (flag == 'X')
-		return (ft_p(ft_itoa_base(va_arg(args, unsigned int), 0), 0));
+		return (ft_pstr(ft_itoa_base(va_arg(args, unsigned int), 0), 0));
 	if (flag == 'p')
-		return (ft_p(ft_ptoa((unsigned long) va_arg(args, void *)), 0));
+		return (ft_pstr(ft_ptoa((unsigned long) va_arg(args, void *)), 0));
 	return (0);
 }
 

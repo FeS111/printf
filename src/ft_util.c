@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fschmid <fschmid@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:05:12 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/30 14:49:50 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/10/31 23:42:54 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 size_t	ft_count_digit(unsigned long n, int base)
 {

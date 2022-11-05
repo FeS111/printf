@@ -11,7 +11,7 @@ AR		= ar
 ARFLAGS = -rcs
 # File Variables
 NAME	= libftprintf.a
-SRC		= $(wildcard src/*.c)
+SRC		= $(addprefix src/, ft_flags.c ft_printf.c ft_util.c)
 OBJ		= $(addprefix _bin/,$(notdir $(SRC:.c=.o)))
 
 $(NAME): $(OBJ) | libft/libft.a

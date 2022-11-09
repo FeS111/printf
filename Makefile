@@ -5,7 +5,7 @@ VPATH = src
 
 # Compiler Variables
 CC		= cc
-CFLAGSS	= -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGSS	= -Wall -Wextra -Werror -g
 INCFLAG	= -I include -I libft
 AR		= ar
 ARFLAGS = -rcs

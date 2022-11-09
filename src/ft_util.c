@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fschmid <fschmid@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: fschmid <fschmid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:05:12 by fschmid           #+#    #+#             */
-/*   Updated: 2022/10/31 23:42:54 by fschmid          ###   ########.fr       */
+/*   Updated: 2022/11/09 14:55:35 by fschmid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_itoa_base(unsigned long n, int lower)
 	else
 		base = "0123456789ABCDEF";
 	len = ft_count_digit(n, 16);
-	itoa = ft_calloc(len + 1, sizeof(char));
+	itoa = ft_calloc(len + 2, sizeof(char));
 	if (!itoa)
 		return (NULL);
 	if (n == 0)

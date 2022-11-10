@@ -32,7 +32,6 @@ clean:
 
 fclean:	clean
 	@rm -f $(NAME)
-	@rm -rf libft
 
 re:		fclean all
 

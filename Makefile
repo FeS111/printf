@@ -18,7 +18,7 @@ $(NAME): $(OBJ) | libft/libft.a
 	cp libft/libft.a $@
 	$(AR) $(ARFLAGS) $@ $^
 
-libft/libft.a: libft
+libft/libft.a:
 	(cd libft && make && make clean)
 
 _bin :
